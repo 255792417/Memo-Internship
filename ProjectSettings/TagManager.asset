@@ -12,10 +12,10 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
-  - 
-  - 
+  - Environment
+  - NPC
+  - Ground
+  - Mine
   - 
   - 
   - 
@@ -40,4 +40,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Environment
+    uniqueID: 2435434489
+    locked: 0
+  - name: Mine
+    uniqueID: 241859285
+    locked: 0
+  - name: NPC
+    uniqueID: 3042138615
     locked: 0
