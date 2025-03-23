@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Items
   layers:
   - Default
   - TransparentFX
@@ -16,8 +18,8 @@ TagManager:
   - NPC
   - Ground
   - Mine
-  - 
-  - 
+  - Player
+  - Items
   - 
   - 
   - 
@@ -44,9 +46,12 @@ TagManager:
   - name: Environment
     uniqueID: 2435434489
     locked: 0
+  - name: NPC
+    uniqueID: 3042138615
+    locked: 0
   - name: Mine
     uniqueID: 241859285
     locked: 0
-  - name: NPC
-    uniqueID: 3042138615
+  - name: Items
+    uniqueID: 1757189103
     locked: 0

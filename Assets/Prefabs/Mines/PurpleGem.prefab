@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3752667504606664521}
   - component: {fileID: 6438705660613891828}
   - component: {fileID: 6271442882789847204}
+  - component: {fileID: -1878546240528328422}
+  - component: {fileID: -7380424509995949969}
   m_Layer: 10
   m_Name: PurpleGem
   m_TagString: Untagged
@@ -142,7 +144,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0020311475, y: -0.01052013}
@@ -158,3 +160,51 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.31017244, y: 0.39850408}
   m_EdgeRadius: 0
+--- !u!58 &-1878546240528328422
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5483696083258530180}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.005523443}
+  serializedVersion: 2
+  m_Radius: 0.23245859
+--- !u!114 &-7380424509995949969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5483696083258530180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e32ce7c6bb30f4a928e02166a8d7ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 10

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public StatusController statusController;
+
     private Rigidbody2D rb;
     public GameObject landCheck;
     public GameObject LeftCheck;
@@ -45,6 +47,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        statusController = GetComponent<StatusController>();
     }
 
     // Update is called once per frame
@@ -55,6 +58,12 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        // 如果死亡，停止运动
+        if (statusController != null && statusController.isDead)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
         Movement();
         Animation();
         GroundCheck();

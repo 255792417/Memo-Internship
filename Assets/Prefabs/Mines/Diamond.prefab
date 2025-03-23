@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1550474005549076408}
   - component: {fileID: 4440788131388672122}
   - component: {fileID: 4619723565332418223}
+  - component: {fileID: 8504388458882961980}
+  - component: {fileID: 7180238690971869}
   m_Layer: 10
   m_Name: Diamond
   m_TagString: Untagged
@@ -142,7 +144,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0047359467, y: -0.028099298}
@@ -158,3 +160,51 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4399886, y: 0.37957275}
   m_EdgeRadius: 0
+--- !u!58 &8504388458882961980
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6303292959523308503}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.004142523, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.24396586
+--- !u!114 &7180238690971869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6303292959523308503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e32ce7c6bb30f4a928e02166a8d7ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 10

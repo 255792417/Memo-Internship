@@ -14,10 +14,15 @@ public class PlayerController : MonoBehaviour
         public TileBase tile;
         public float maxHealth = 100f;
         public TileBase[] damageStages;
+
+        [Header("矿石属性")]
+        public bool isOre = false; // 是否是矿石
+        public GameObject orePrefab;  // 矿物预制体
     }
 
     [Header("Tilemap")]
-    public Tilemap tilemap;
+    public Tilemap groundTilemap;
+    public Tilemap replacementTilemap;
     public RuleTile replacementRuleTile;
     public List<TileType> tileTypes;
     public float DamagePerSecond = 100f;
@@ -38,10 +43,10 @@ public class PlayerController : MonoBehaviour
     // 初始化瓦片生命值
     private void initTileHealth()
     {
-        BoundsInt bounds = tilemap.cellBounds;
+        BoundsInt bounds = groundTilemap.cellBounds;
         foreach (Vector3Int pos in bounds.allPositionsWithin)
         {
-            TileBase tile = tilemap.GetTile(pos);
+            TileBase tile = groundTilemap.GetTile(pos);
             if (tile != null)
             {
                 TileType tileType = GetTileType(tile);
@@ -68,24 +73,24 @@ public class PlayerController : MonoBehaviour
     {
         if (Player.isGround)
         {
-            Vector3Int cell = tilemap.WorldToCell(Player.transform.position);
+            Vector3Int cell = groundTilemap.WorldToCell(Player.transform.position);
             if (Input.GetKey(KeyCode.DownArrow))
             {
-                cell = tilemap.WorldToCell(Player.transform.position + new Vector3(0, -0.8f, 0));
+                cell = groundTilemap.WorldToCell(Player.transform.position + new Vector3(0, -0.8f, 0));
             }
             else if (Input.GetKey(KeyCode.RightArrow))
             {
-                cell = tilemap.WorldToCell(Player.transform.position + new Vector3(0.75f, 0, 0));
+                cell = groundTilemap.WorldToCell(Player.transform.position + new Vector3(0.75f, 0, 0));
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
             {
-                cell = tilemap.WorldToCell(Player.transform.position + new Vector3(-0.75f, 0, 0));
+                cell = groundTilemap.WorldToCell(Player.transform.position + new Vector3(-0.75f, 0, 0));
             }
-            if (tilemap.GetTile(cell) != null)
+            if (groundTilemap.GetTile(cell) != null)
             {
                 DamageTile(cell, DamagePerSecond / 50);
 
-                RefreshSurroundingTiles(tilemap, cell);
+                RefreshSurroundingTiles(cell);
             }
         }
     }
@@ -94,7 +99,7 @@ public class PlayerController : MonoBehaviour
     //处理瓦片破坏 和 阶段图像
     public void DamageTile(Vector3Int position, float damage)
     {
-        TileBase currentTile = tilemap.GetTile(position);
+        TileBase currentTile = groundTilemap.GetTile(position);
         if (currentTile == null) return;
 
         TileType tileType = GetTileType(currentTile);
@@ -109,8 +114,16 @@ public class PlayerController : MonoBehaviour
 
         if (tileHealthMap[position] <= 0)
         {
-            tilemap.SetTile(position, replacementRuleTile);
-            tileHealthMap.Remove(position);
+            // 从原始Tilemap移除瓦片
+            groundTilemap.SetTile(position, null);
+            // 在替换Tilemap上放置RuleTile
+            replacementTilemap.SetTile(position, replacementRuleTile);
+
+            // 如果是矿石，生成矿物
+            if (tileType.isOre && tileType.orePrefab != null)
+            {
+                SpawnOreItems(position, tileType);
+            }
         }
         else
         {
@@ -118,7 +131,7 @@ public class PlayerController : MonoBehaviour
             int stageIndex = Mathf.FloorToInt((1 - healthPercentage) * tileType.damageStages.Length);
             stageIndex = Mathf.Clamp(stageIndex, 0, tileType.damageStages.Length - 1);
 
-            tilemap.SetTile(position, tileType.damageStages[stageIndex]);
+            groundTilemap.SetTile(position, tileType.damageStages[stageIndex]);
         }
     }
 
@@ -129,19 +142,31 @@ public class PlayerController : MonoBehaviour
 
 
     // 刷新碰撞箱
-    void RefreshSurroundingTiles(Tilemap tilemap, Vector3Int position)
+    void RefreshSurroundingTiles(Vector3Int position)
     {
         for (int y = -1; y <= 1; y++)
         {
             for (int x = -1; x <= 1; x++)
             {
                 Vector3Int neighborPos = new Vector3Int(position.x + x, position.y + y, position.z);
-                if (tilemap.HasTile(neighborPos))
+                if (groundTilemap.HasTile(neighborPos))
                 {
-                    tilemap.RefreshTile(neighborPos);
+                    groundTilemap.RefreshTile(neighborPos);
+                }
+                if (replacementTilemap.HasTile(neighborPos))
+                {
+                    replacementTilemap.RefreshTile(neighborPos);
                 }
             }
         }
+    }
+
+        private void SpawnOreItems(Vector3Int tilePosition, TileType tileType)
+    {
+        // 获取世界坐标
+        Vector3 worldPos = groundTilemap.GetCellCenterWorld(tilePosition);
+        // 实例化物品
+        GameObject item = Instantiate(tileType.orePrefab, worldPos, Quaternion.identity);
     }
 
 }
