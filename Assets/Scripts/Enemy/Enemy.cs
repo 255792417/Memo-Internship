@@ -194,10 +194,11 @@ public class Enemy : MonoBehaviour, IDamagable
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        if(currentHealth < 0)
+        if(currentHealth <= 0)
         {
             currentHealth = 0;
             isDead = true;
+            anim.SetTrigger("Death");
         }
     }
 
@@ -206,4 +207,8 @@ public class Enemy : MonoBehaviour, IDamagable
         TakeDamage(damage);
     }
 
+    void DestoryEnemy()
+    {
+        Destroy(gameObject);
+    }
 }

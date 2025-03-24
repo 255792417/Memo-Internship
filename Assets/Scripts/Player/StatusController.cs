@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class StatusController : MonoBehaviour, IDamagable
 {
+    public ScoreDisplay scoreDisplay;
+    public Health health;
+    public Oxygen oxygen;
+
     public Animator anim;
     public Rigidbody2D rb;
 
@@ -41,6 +45,10 @@ public class StatusController : MonoBehaviour, IDamagable
         currentHealth = maxHealth;
         currentOxygen = maxOxygen;
 
+        // 初始化生命值显示
+        health.maxHealth = maxHealth;
+        health.SetHealth(currentHealth);
+
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -72,8 +80,12 @@ public class StatusController : MonoBehaviour, IDamagable
         // 氧气耗尽扣血
         if (currentOxygen <= 0)
         {
+            currentOxygen = 0;
             TakeDamage(10f * Time.deltaTime);
         }
+
+        // 更新氧气值显示
+        oxygen.SetOxygen(currentOxygen);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -118,6 +130,9 @@ public class StatusController : MonoBehaviour, IDamagable
             anim.SetBool("Dead", isDead);
         }
         anim.SetTrigger("Hit");
+
+        // 更新生命值显示
+        health.SetHealth(currentHealth);
     }
     void IDamagable.TakeDamage(float damage)
     {
@@ -148,6 +163,7 @@ public class StatusController : MonoBehaviour, IDamagable
     public void AddScore(int score)
     {
         this.score += score;
+        scoreDisplay.SetScore(this.score);
     }
 
     void ToggleRenderers(bool visible)

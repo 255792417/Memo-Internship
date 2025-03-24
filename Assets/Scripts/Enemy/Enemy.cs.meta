@@ -3,7 +3,13 @@ guid: a699e54d47e98a04cbd44c2d946d28f6
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - anim: {instanceID: 0}
+  - pointA: {instanceID: 0}
+  - pointB: {instanceID: 0}
+  - targetPoint: {instanceID: 0}
+  - tilemap: {instanceID: 0}
+  - ruleTile: {fileID: 11400000, guid: cb4eab454a26ae84289c6e96a3d7134a, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

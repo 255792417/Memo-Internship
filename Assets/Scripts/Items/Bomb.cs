@@ -18,12 +18,29 @@ public class Bomb : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        startTime = Time.time;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Time.time >= startTime + waitTime)
+        {
+            anim.SetTrigger("Explode");
+        }
+    }
+
+    public void Explotion() // Animation Event
+    {
+        Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(transform.position, radius, targetLayer);
+        foreach (Collider2D enemy in enemiesToDamage)
+        {
+            enemy.GetComponent<IDamagable>().TakeDamage(bombDamage);
+        }
+    }
+    public void DestroyBomb() // Animation Event
+    {
+        Destroy(gameObject);
     }
 
     public void OnDrawGizmos()
