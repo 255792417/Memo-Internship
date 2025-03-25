@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public AudioManager audioManager;
     public StatusController statusController;
 
     private Rigidbody2D rb;
@@ -109,6 +110,9 @@ public class Player : MonoBehaviour
         // 处理运动
         if (isFlying)
         {
+            // 处理音频
+            audioManager.PlayWithFixedSource(1,"Fly",false);
+
             rb.velocity = new Vector2(rb.velocity.x, flySpeed);
             if (rb.velocity.y < flySpeed)
             {
@@ -149,6 +153,12 @@ public class Player : MonoBehaviour
         else
         {
             drillRight.SetActive(false);
+        }
+
+        // 处理音频
+        if(isDrillingDown || isDrillingLeft || isDrillingRight)
+        {
+            audioManager.PlayWithFixedSource(2,"Drill",false);
         }
     }
 

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class StatusController : MonoBehaviour, IDamagable
 {
+    public AudioManager audioManager;
+
     public ScoreDisplay scoreDisplay;
     public Health health;
     public Oxygen oxygen;
@@ -69,22 +71,30 @@ public class StatusController : MonoBehaviour, IDamagable
         int depth = (int)((-0.4f - transform.position.y) / 0.65);
         if (depth > 20)
         {
-            currentOxygen -= (depth - 20) * Time.deltaTime;
+            ReduceOxygen((depth - 20) * Time.deltaTime);
         }
         // 五层以上每秒回复 20 点氧气
-        else if (depth < 5 && currentOxygen < maxOxygen)
+        else if (depth < 5)
         {
-            currentOxygen += 20 * Time.deltaTime;
+            AddOxygen(20 * Time.deltaTime);
         }
+    }
 
-        // 氧气耗尽扣血
-        if (currentOxygen <= 0)
+    public void  AddOxygen(float value)
+    {
+        currentOxygen += value;
+        currentOxygen = Mathf.Min(currentOxygen, maxOxygen);
+        oxygen.SetOxygen(currentOxygen);
+    }
+
+    public void ReduceOxygen(float value)
+    {
+        currentOxygen -= value;
+        if(currentOxygen <= 0)
         {
             currentOxygen = 0;
             TakeDamage(10f * Time.deltaTime);
         }
-
-        // 更新氧气值显示
         oxygen.SetOxygen(currentOxygen);
     }
 
@@ -115,6 +125,9 @@ public class StatusController : MonoBehaviour, IDamagable
 
     public void TakeDamage(float damage)
     {
+        // 受击音效
+        audioManager.Play("Hit",false);
+       
         currentHealth -= damage;
 
         if (!isFlashing)
@@ -124,6 +137,9 @@ public class StatusController : MonoBehaviour, IDamagable
 
         if (currentHealth <= 0)
         {
+            // 死亡音效
+            audioManager.Play("Gameover",false);
+
             currentHealth = 0;
             isDead = true;
             // 死亡动画
@@ -137,6 +153,17 @@ public class StatusController : MonoBehaviour, IDamagable
     void IDamagable.TakeDamage(float damage)
     {
         TakeDamage(damage);
+    }
+
+    public void Heal(float amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
+        health.SetHealth(currentHealth);
+    }
+    void IDamagable.Heal(float amount)
+    {
+        Heal(amount);
     }
 
     IEnumerator FlashEffect()

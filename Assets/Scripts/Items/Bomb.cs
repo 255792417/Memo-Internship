@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
+    public AudioManager audioManager;
     private Animator anim;
 
     public float startTime;
@@ -38,6 +39,12 @@ public class Bomb : MonoBehaviour
             enemy.GetComponent<IDamagable>().TakeDamage(bombDamage);
         }
     }
+
+    void PlayAudio()
+    {
+        audioManager.Play("Bomb",false);
+    }
+
     public void DestroyBomb() // Animation Event
     {
         Destroy(gameObject);

@@ -7,6 +7,9 @@ public class Enemy : MonoBehaviour, IDamagable
 {
     EnemyBaseState currentState;
 
+    [Header("Audio")]
+    public AudioManager audioManager;
+
     [Header("Health")]
     public float maxHealth = 100f;
     public float currentHealth;
@@ -205,6 +208,18 @@ public class Enemy : MonoBehaviour, IDamagable
     void IDamagable.TakeDamage(float damage)
     {
         TakeDamage(damage);
+    }
+
+    void IDamagable.Heal(float value)
+    {
+        currentHealth += value;
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
+    }
+
+    // ≤•∑≈À¿Õˆ“Ù–ß
+    void PlayAudio()
+    {
+        audioManager.Play("EnemyDie",false);
     }
 
     void DestoryEnemy()
