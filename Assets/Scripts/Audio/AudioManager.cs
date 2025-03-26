@@ -10,27 +10,44 @@ public class AudioManager : MonoBehaviour
     {
         public AudioClip clip;
         public string name;
+        public string targetMixerGroup;
     }
     public List<Clip> clipList;
 
-    public AudioMixer audioMixer;
+    [System.Serializable]
+    public class MixerGroup
+    {
+        public AudioMixerGroup mixer;
+        public string name;
+    }
+    public List<MixerGroup> mixerList;
 
-    Dictionary<string, AudioClip> clipDictionary = new Dictionary<string, AudioClip>();
+    Dictionary<string, AudioMixerGroup> mixerDict = new Dictionary<string, AudioMixerGroup>();
+
+    Dictionary<string, Clip> clipDictionary = new Dictionary<string, Clip>();
     List<AudioSource> audios = new List<AudioSource>();
     public int sourceNumber = 10;
     public int currentSourceNumber = 0;
 
     private void Awake()
     {
+
         for (int i = 0; i < sourceNumber; i++)
         {
             var audio = this.gameObject.AddComponent<AudioSource>();
             audios.Add(audio);
         }
 
+        // 初始化clip字典
         for(int i = 0; i < clipList.Count; i++)
         {
-            clipDictionary.Add(clipList[i].name, clipList[i].clip);
+            clipDictionary.Add(clipList[i].name, clipList[i]);
+        }
+
+        // 初始化mixer字典
+        foreach (var mixerGroup in mixerList)
+        {
+            mixerDict.Add(mixerGroup.name, mixerGroup.mixer);
         }
 
         PlayWithFixedSource(0,"Bgm", true);
@@ -47,8 +64,9 @@ public class AudioManager : MonoBehaviour
         if(clip != null)
         {
             var audio = audios[currentSourceNumber++];
-            audio.clip = clip;
+            audio.clip = clip.clip;
             audio.loop = isLoop;
+            audio.outputAudioMixerGroup = mixerDict[clip.targetMixerGroup];
             audio.Play();
         }
     }
@@ -59,8 +77,9 @@ public class AudioManager : MonoBehaviour
         if (clip != null && !audios[index].isPlaying)
         {
             var audio = audios[index];
-            audio.clip = clip;
+            audio.clip = clip.clip;
             audio.loop = isLoop;
+            audio.outputAudioMixerGroup= mixerDict[clip.targetMixerGroup];
             audio.Play();
         }
     }

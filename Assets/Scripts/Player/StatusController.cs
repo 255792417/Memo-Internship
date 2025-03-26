@@ -22,6 +22,9 @@ public class StatusController : MonoBehaviour, IDamagable
     public float currentOxygen; // 当前氧气值
     public float currentHealth; // 当前生命值
     public bool isDead = false; // 是否死亡
+    public float damageInterval = 1f;
+
+    private float lastDamageTime;
 
     [Header("Score")]
     public int score = 0; // 分数
@@ -50,6 +53,8 @@ public class StatusController : MonoBehaviour, IDamagable
         // 初始化生命值显示
         health.maxHealth = maxHealth;
         health.SetHealth(currentHealth);
+
+        lastDamageTime = Time.time;
 
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -93,7 +98,7 @@ public class StatusController : MonoBehaviour, IDamagable
         if(currentOxygen <= 0)
         {
             currentOxygen = 0;
-            TakeDamage(10f * Time.deltaTime);
+            TakeDamage(10f);
         }
         oxygen.SetOxygen(currentOxygen);
     }
@@ -125,6 +130,9 @@ public class StatusController : MonoBehaviour, IDamagable
 
     public void TakeDamage(float damage)
     {
+        if (Time.time < lastDamageTime + damageInterval) return;
+        lastDamageTime = Time.time;
+
         // 受击音效
         audioManager.Play("Hit",false);
        
