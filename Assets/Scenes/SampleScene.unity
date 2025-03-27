@@ -333,7 +333,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4af17b8a934acd04e999624ee9b7df00, type: 2}
     - {fileID: 11400000, guid: 7d3c5c25be426da46bb680df215ec551, type: 2}
     isOre: 0
-    orePrefab: {fileID: 0}
+    oreName: 
   - tile: {fileID: 11400000, guid: 872b2f4581df2f14784d7cee49f1cd2a, type: 2}
     maxHealth: 100
     damageStages:
@@ -345,61 +345,61 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 4af17b8a934acd04e999624ee9b7df00, type: 2}
     - {fileID: 11400000, guid: 7d3c5c25be426da46bb680df215ec551, type: 2}
     isOre: 0
-    orePrefab: {fileID: 0}
+    oreName: 
   - tile: {fileID: 11400000, guid: e5f2c076124f32248a0cd89cacd06bce, type: 2}
     maxHealth: 100
     damageStages:
     - {fileID: 11400000, guid: e5f2c076124f32248a0cd89cacd06bce, type: 2}
     isOre: 1
-    orePrefab: {fileID: 8047325450541009431, guid: 8a46463387d962446acc98faee9054f6, type: 3}
+    oreName: Coal
   - tile: {fileID: 11400000, guid: 135607acb649e8044bd59c9d24ba0ada, type: 2}
     maxHealth: 100
     damageStages:
     - {fileID: 11400000, guid: 135607acb649e8044bd59c9d24ba0ada, type: 2}
     isOre: 1
-    orePrefab: {fileID: 2139285646855723650, guid: 9f74332375f7ee54bbc48452ba866ede, type: 3}
+    oreName: Copper
   - tile: {fileID: 11400000, guid: b045f3ab4001095499016f101668d2e0, type: 2}
     maxHealth: 100
     damageStages:
     - {fileID: 11400000, guid: b045f3ab4001095499016f101668d2e0, type: 2}
     isOre: 1
-    orePrefab: {fileID: 1028460905867327626, guid: 3df7e468135843f4999d08c1bca2087b, type: 3}
+    oreName: Iron
   - tile: {fileID: 11400000, guid: 285419b451153e94c9076b4e94cfba44, type: 2}
     maxHealth: 100
     damageStages:
     - {fileID: 11400000, guid: 285419b451153e94c9076b4e94cfba44, type: 2}
     isOre: 1
-    orePrefab: {fileID: 5860072014562836470, guid: 32dc42ca96d51144f8634c60f4bbb38e, type: 3}
+    oreName: Gold
   - tile: {fileID: 11400000, guid: 6176625dc9c8e0646be8db241a97764d, type: 2}
     maxHealth: 100
     damageStages:
     - {fileID: 11400000, guid: 6176625dc9c8e0646be8db241a97764d, type: 2}
     isOre: 1
-    orePrefab: {fileID: 8107351357362767458, guid: c7ff7c6389252aa42b397f41acb41ed9, type: 3}
+    oreName: Quartz
   - tile: {fileID: 11400000, guid: 3ac84517e9432a94a812d4153b7da0af, type: 2}
     maxHealth: 100
     damageStages:
     - {fileID: 11400000, guid: 3ac84517e9432a94a812d4153b7da0af, type: 2}
     isOre: 1
-    orePrefab: {fileID: 5483696083258530180, guid: 2d6943d0136fffa40b9cae767a59ce86, type: 3}
+    oreName: PurpleGem
   - tile: {fileID: 11400000, guid: ac9c83319e9a0684fafd29cda1a37dff, type: 2}
     maxHealth: 100
     damageStages:
     - {fileID: 11400000, guid: ac9c83319e9a0684fafd29cda1a37dff, type: 2}
     isOre: 1
-    orePrefab: {fileID: 2499981579050340273, guid: f94ec6ebd98f97f44a1a34393e8c62bc, type: 3}
+    oreName: OrangeGem
   - tile: {fileID: 11400000, guid: 3d96c7e0e34878c4ba29a293cd29be63, type: 2}
     maxHealth: 100
     damageStages:
     - {fileID: 11400000, guid: 3d96c7e0e34878c4ba29a293cd29be63, type: 2}
     isOre: 1
-    orePrefab: {fileID: 6220615069871984373, guid: 130f993d8a5a1ca4ea636f9a385bd9ad, type: 3}
+    oreName: Emerald
   - tile: {fileID: 11400000, guid: 841d5fbb36060124c92131ab825bbea7, type: 2}
     maxHealth: 100
     damageStages:
     - {fileID: 11400000, guid: 841d5fbb36060124c92131ab825bbea7, type: 2}
     isOre: 1
-    orePrefab: {fileID: 6303292959523308503, guid: 17a440775a792184eb33b136e25c79da, type: 3}
+    oreName: Diamond
   DamagePerSecond: 200
   drillSound: {fileID: 0}
 --- !u!114 &90213451
@@ -431,6 +431,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c664b14a1029c10469fa574fb2a1ced2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minesList:
+  - minePrefab: {fileID: 8047325450541009431, guid: 8a46463387d962446acc98faee9054f6, type: 3}
+    name: Coal
+  - minePrefab: {fileID: 2139285646855723650, guid: 9f74332375f7ee54bbc48452ba866ede, type: 3}
+    name: Copper
+  - minePrefab: {fileID: 6303292959523308503, guid: 17a440775a792184eb33b136e25c79da, type: 3}
+    name: Diamond
+  - minePrefab: {fileID: 6220615069871984373, guid: 130f993d8a5a1ca4ea636f9a385bd9ad, type: 3}
+    name: Emerald
+  - minePrefab: {fileID: 5860072014562836470, guid: 32dc42ca96d51144f8634c60f4bbb38e, type: 3}
+    name: Gold
+  - minePrefab: {fileID: 1028460905867327626, guid: 3df7e468135843f4999d08c1bca2087b, type: 3}
+    name: Iron
+  - minePrefab: {fileID: 2499981579050340273, guid: f94ec6ebd98f97f44a1a34393e8c62bc, type: 3}
+    name: OrangeGem
+  - minePrefab: {fileID: 5483696083258530180, guid: 2d6943d0136fffa40b9cae767a59ce86, type: 3}
+    name: PurpleGem
+  - minePrefab: {fileID: 8107351357362767458, guid: c7ff7c6389252aa42b397f41acb41ed9, type: 3}
+    name: Quartz
 --- !u!95 &99165354 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 7832785283500443099, guid: cf5b6466d7b89834ebb37963be651ffe, type: 3}

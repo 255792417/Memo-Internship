@@ -207,4 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e32ce7c6bb30f4a928e02166a8d7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisItem: {fileID: 11400000, guid: 3c3c76522972e9545a3d06e6ce279a45, type: 2}
+  playerInventory: {fileID: 11400000, guid: 67fc3ca04e6bfda43966afff56372de7, type: 2}
   score: 1000

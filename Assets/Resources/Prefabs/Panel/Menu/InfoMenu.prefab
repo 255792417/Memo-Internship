@@ -1330,6 +1330,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backButton: {fileID: 8472766224769163225}
+  mineNumTexts:
+  - {fileID: 3076649473074846752}
+  - {fileID: 2748522457973210917}
+  - {fileID: 5309177177694010237}
+  - {fileID: 5354317620570015006}
+  - {fileID: 1740963319158715855}
+  - {fileID: 1165706249810829267}
+  - {fileID: 2942169320508299194}
+  - {fileID: 7597162744274538370}
+  - {fileID: 5372479680588097234}
 --- !u!1 &4861578519966397149
 GameObject:
   m_ObjectHideFlags: 0

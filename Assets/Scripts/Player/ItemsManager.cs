@@ -83,5 +83,10 @@ public class ItemsManager : MonoBehaviour
             anim.SetTrigger("Teleport");
             audioManager.Play("Teleport", false);
         }
-    }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            UIManager.Instance.OpenPanel(UIConst.BagPanel);
+        }
+        }
 }

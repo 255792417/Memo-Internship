@@ -49,7 +49,8 @@ public class UIManager
         {
             {UIConst.SettingsPanel, "Menu/SettingsMenu" },
             {UIConst.InfoPanel, "Menu/InfoMenu" },
-            {UIConst.AudioPanel, "Menu/AudioMenu" }
+            {UIConst.AudioPanel, "Menu/AudioMenu" },
+            {UIConst.BagPanel, "Menu/Bag" }
         };
     }
 
@@ -104,4 +105,5 @@ public class UIConst
     public const string SettingsPanel = "SettingsPanel";
     public const string InfoPanel = "InfoPanel";
     public const string AudioPanel = "AudioPanel";
+    public const string BagPanel = "BagPanel";
 }

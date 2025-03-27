@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
 
         [Header("矿石属性")]
         public bool isOre = false; // 是否是矿石
-        public GameObject orePrefab;  // 矿物预制体
+        public string oreName;
     }
 
     [Header("Tilemap")]
@@ -120,9 +120,9 @@ public class PlayerController : MonoBehaviour
             replacementTilemap.SetTile(position, replacementRuleTile);
 
             // 如果是矿石，生成矿物
-            if (tileType.isOre && tileType.orePrefab != null)
+            if (tileType.isOre && tileType.oreName != null)
             {
-                SpawnOreItems(position, tileType);
+                SpawnOreItems(position, tileType.oreName);
             }
         }
         else
@@ -161,12 +161,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-        private void SpawnOreItems(Vector3Int tilePosition, TileType tileType)
+        private void SpawnOreItems(Vector3Int tilePosition, string name)
     {
         // 获取世界坐标
         Vector3 worldPos = groundTilemap.GetCellCenterWorld(tilePosition);
-        // 实例化物品
-        GameObject item = Instantiate(tileType.orePrefab, worldPos, Quaternion.identity);
+        MinesManager.Instance.SpawnMine(name, worldPos);
     }
 
 }
