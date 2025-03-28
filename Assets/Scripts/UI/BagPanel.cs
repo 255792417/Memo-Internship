@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BagPanel : BasePanel
+public class BagPanel : MonoBehaviour
 {
     public Button backButton;
     public Button deleteButton;
+
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
 
     void Start()
     {
@@ -16,7 +21,7 @@ public class BagPanel : BasePanel
 
     private void BackButtonClickEvent()
     {
-        UIManager.Instance.ClosePanel(UIConst.BagPanel);
+        gameObject.SetActive(false);
     }
 
     private void DeleteButtonClickEvent()

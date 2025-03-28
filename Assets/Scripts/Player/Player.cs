@@ -51,12 +51,6 @@ public class Player : MonoBehaviour
         statusController = GetComponent<StatusController>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void FixedUpdate()
     {
         // 如果死亡，停止运动
@@ -72,6 +66,7 @@ public class Player : MonoBehaviour
         Drill();
     }
 
+    // 处理运动
     void Movement()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -125,9 +120,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    //处理钻头显示
+    //处理钻头显示 和 音效
     void Drill()
     {
+        // 处理音频
+        if (isDrillingDown || isDrillingLeft || isDrillingRight)
+        {
+            audioManager.PlayWithFixedSource(2, "Drill", false);
+        }
+
         if (isDrillingDown)
         {
             drillDown.SetActive(true);
@@ -155,15 +156,11 @@ public class Player : MonoBehaviour
             drillRight.SetActive(false);
         }
 
-        // 处理音频
-        if(isDrillingDown || isDrillingLeft || isDrillingRight)
-        {
-            audioManager.PlayWithFixedSource(2,"Drill",false);
-        }
     }
 
     void DrillCheck()
     {
+        // 判断左右两边是否有方块
         bool rightGround = Physics2D.OverlapCircle(RightCheck.transform.position, RightCheckRadius, groundLayer);
         bool leftGround = Physics2D.OverlapCircle(LeftCheck.transform.position, LeftCheckRadius, groundLayer);
         
@@ -171,6 +168,7 @@ public class Player : MonoBehaviour
         if(Input.GetKey(KeyCode.DownArrow) && isGround)
         {
             isDrillingDown = true;
+            return;
         }
         else
         {
@@ -180,6 +178,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow) && rightGround)
         {
             isDrillingRight = true;
+            return;
         }
         else
         {
@@ -189,6 +188,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow) && leftGround)
         {
             isDrillingLeft = true;
+            return;
         }
         else
         {

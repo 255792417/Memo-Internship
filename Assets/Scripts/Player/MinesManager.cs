@@ -6,8 +6,10 @@ using UnityEngine.Pool;
 
 public class MinesManager : MonoBehaviour
 {
+    // 单例模式
     private static MinesManager instance;
 
+    // 每种矿石挖了多少个
     private Dictionary<string, int> mineScoreDict = new Dictionary<string, int>();
 
     [System.Serializable]
@@ -19,7 +21,9 @@ public class MinesManager : MonoBehaviour
     [SerializeField]
     private List<Mine> minesList = new List<Mine>();
 
+    // 通过名称查找预制体
     private Dictionary<string, GameObject> minesPrefabDict = new Dictionary<string, GameObject>();
+    // 每种矿石都单独使用一个对象池
     private Dictionary<string, ObjectPool<GameObject>> minePools = new Dictionary<string, ObjectPool<GameObject>>();
 
     private void Awake()
@@ -46,6 +50,7 @@ public class MinesManager : MonoBehaviour
         }
     }
 
+    // 获取矿石已经挖到的个数
     public int GetMineScore(string name)
     {
         if(mineScoreDict.ContainsKey(name))
@@ -59,6 +64,7 @@ public class MinesManager : MonoBehaviour
     }
 
 
+    // 生成可拾取的矿石
     public GameObject SpawnMine(string name, Vector3 position)
     {
         GameObject mine = minePools[name].Get();
@@ -66,6 +72,7 @@ public class MinesManager : MonoBehaviour
         return mine;
     }
 
+    // 拾取时销毁
     public void ReleaseMine(string name, GameObject mineObject)
     {
         minePools[name].Release(mineObject);

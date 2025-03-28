@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Drill
   itemImage: {fileID: 21300000, guid: 2e351454bae86a04c86ebe3a52732f31, type: 3}
-  itemHeld: 0
+  itemHeld: 1
   canEquip: 1
+  defaultItemHeld: 1

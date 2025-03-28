@@ -5,17 +5,32 @@ using UnityEngine.Pool;
 
 public class ItemsManager : MonoBehaviour
 {
-    public AudioManager audioManager;
-    public Animator anim;
-    public StatusController playerStatus;
-    public GameObject bombPrefab;
-    public Transform playerTransform;
+    //单例模式
+    public static ItemsManager Instance;
+
+    public AudioManager audioManager; // 音效管理
+    public Animator anim; // 动画
+    public StatusController playerStatus; // 玩家状态管理
+    public GameObject bombPrefab; // 炸弹预制体
+    public Transform playerTransform; // 玩家位置（用于生成炸弹）
+    public GameObject bagPanel; // 背包界面
 
     // 对象池
-    private ObjectPool<GameObject> bombPool;
+    public ObjectPool<GameObject> bombPool;
 
     void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         // 创建对象池
         bombPool = new ObjectPool<GameObject>(
             createFunc: CreateBomb,       // 创建对象的方法
@@ -28,6 +43,7 @@ public class ItemsManager : MonoBehaviour
             );
     }
 
+
     private GameObject CreateBomb()
     {
         GameObject bombObj = Instantiate(bombPrefab);
@@ -36,7 +52,7 @@ public class ItemsManager : MonoBehaviour
         return bombObj;
     }
 
-    private void OnGetBomb(GameObject  bomb)
+    private void OnGetBomb(GameObject bomb)
     {
         bomb.transform.position = playerTransform.position;
         bomb.SetActive(true);
@@ -59,7 +75,7 @@ public class ItemsManager : MonoBehaviour
         {
             playerStatus.AddOxygen(playerStatus.maxOxygen);
             anim.SetTrigger("OxygenCapsule");
-            audioManager.Play("OxygenCapsule",false);
+            audioManager.Play("OxygenCapsule", false);
         }
 
         // 按 2 恢复生命
@@ -67,7 +83,7 @@ public class ItemsManager : MonoBehaviour
         {
             playerStatus.Heal(playerStatus.maxHealth);
             anim.SetTrigger("MedicalKit");
-            audioManager.Play("MedicalKit",false );
+            audioManager.Play("MedicalKit", false);
         }
 
         // 按 3 生成炸弹
@@ -84,9 +100,17 @@ public class ItemsManager : MonoBehaviour
             audioManager.Play("Teleport", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        // 按 E 打开背包
+        if (Input.GetKeyDown(KeyCode.E) && !bagPanel.activeSelf)
         {
-            UIManager.Instance.OpenPanel(UIConst.BagPanel);
+            bagPanel.SetActive(true);
+            InventoryManager.instance.RefreshAllItems();
         }
+
+        // 按 Q 关闭背包
+        if (Input.GetKeyDown(KeyCode.Q) && bagPanel.activeSelf)
+        {
+            bagPanel.SetActive(false);
         }
+    }
 }

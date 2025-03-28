@@ -8,6 +8,8 @@ public class SettingsPanel : BasePanel
     public Button continuePlaying;
     public Button infomations;
     public Button audios;
+    public Button save;
+    public Button load;
     public Button exitGame;
 
     private void Start()
@@ -15,6 +17,8 @@ public class SettingsPanel : BasePanel
         continuePlaying.onClick.AddListener(ContinueButtonEvent);
         infomations.onClick.AddListener(InfoButtonEvent);
         audios.onClick.AddListener(AudiosButtonEvent);
+        save.onClick.AddListener(SaveButtonEvent);
+        load.onClick.AddListener(LoadButtonEvent);
         exitGame.onClick.AddListener(ExitButtonEvent);
     }
 
@@ -35,12 +39,18 @@ public class SettingsPanel : BasePanel
         UIManager.Instance.OpenPanel(UIConst.AudioPanel);
     }
 
+    private void SaveButtonEvent()
+    {
+        GameManager.instance.SaveGame();
+    }
+
+    private void LoadButtonEvent()
+    {
+        GameManager.instance.LoadGame();
+    }
+
     private void ExitButtonEvent()
     {
-        #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-        #else
-                    Application.Quit();
-        #endif
+        GameManager.instance.QuitGame();
     }
     }

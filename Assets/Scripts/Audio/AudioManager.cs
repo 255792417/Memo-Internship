@@ -5,6 +5,7 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
+    // Clip -> 对应音频，名字，播放轨道
     [System.Serializable]
     public class Clip
     {
@@ -14,6 +15,7 @@ public class AudioManager : MonoBehaviour
     }
     public List<Clip> clipList;
 
+    // MixerGroup -> 混音器轨道， 名字
     [System.Serializable]
     public class MixerGroup
     {
@@ -22,11 +24,16 @@ public class AudioManager : MonoBehaviour
     }
     public List<MixerGroup> mixerList;
 
+    // 混音器轨道字典
     Dictionary<string, AudioMixerGroup> mixerDict = new Dictionary<string, AudioMixerGroup>();
-
+    // 音频片段字典
     Dictionary<string, Clip> clipDictionary = new Dictionary<string, Clip>();
+    // 播放轨道列表
     List<AudioSource> audios = new List<AudioSource>();
+
+    // 最大播放轨道数
     public int sourceNumber = 10;
+    // 当前可使用的轨道编号
     public int currentSourceNumber = 0;
 
     private void Awake()
@@ -71,6 +78,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    // 使用固定轨道播放
     public void PlayWithFixedSource(int index, string name, bool isLoop)
     {
         var clip = this.clipDictionary[name];

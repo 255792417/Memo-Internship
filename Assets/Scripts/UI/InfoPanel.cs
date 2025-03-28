@@ -21,6 +21,15 @@ public class InfoPanel : BasePanel
 
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            UIManager.Instance.ClosePanel(UIConst.InfoPanel);
+            UIManager.Instance.OpenPanel(UIConst.SettingsPanel);
+        }
+    }
+
     private void BackButtonEvent()
     {
         UIManager.Instance.ClosePanel(UIConst.InfoPanel);

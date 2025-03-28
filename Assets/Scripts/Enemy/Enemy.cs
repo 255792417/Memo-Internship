@@ -11,9 +11,9 @@ public class Enemy : MonoBehaviour, IDamagable
     public AudioManager audioManager;
 
     [Header("Health")]
-    public float maxHealth = 100f;
-    public float currentHealth;
-    public bool isDead = false;
+    public float maxHealth = 100f; // 最大生命值
+    public float currentHealth; // 当前生命值
+    public bool isDead = false; // 死没死
 
     [Header("Animation")]
     public Animator anim;
@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour, IDamagable
     public Transform pointA, pointB;
     public Transform targetPoint;
 
-    public PatrolState patrolState = new PatrolState();
+    public PatrolState patrolState = new PatrolState(); // 巡逻状态
 
     [Header("Tilemap")]
     public Tilemap tilemap;
@@ -57,6 +57,7 @@ public class Enemy : MonoBehaviour, IDamagable
         // 初始化状态
         currentHealth = maxHealth;
 
+        // 更换到巡逻状态
         TransitionToState(patrolState);
 
 

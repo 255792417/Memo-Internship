@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public List<TileType> tileTypes;
     public float DamagePerSecond = 100f;
 
+    // 存储不同 tile 的生命值
     private Dictionary<Vector3Int, float> tileHealthMap = new Dictionary<Vector3Int, float>();
 
     // 处理音效
@@ -71,20 +72,21 @@ public class PlayerController : MonoBehaviour
     //判断破坏
     void Drill()
     {
+        // 如果在地面上，并且对应方向有方块，就破坏
         if (Player.isGround)
         {
             Vector3Int cell = groundTilemap.WorldToCell(Player.transform.position);
             if (Input.GetKey(KeyCode.DownArrow))
             {
-                cell = groundTilemap.WorldToCell(Player.transform.position + new Vector3(0, -0.8f, 0));
+                cell = groundTilemap.WorldToCell(Player.transform.position + new Vector3(0, -0.5f, 0));
             }
             else if (Input.GetKey(KeyCode.RightArrow))
             {
-                cell = groundTilemap.WorldToCell(Player.transform.position + new Vector3(0.75f, 0, 0));
+                cell = groundTilemap.WorldToCell(Player.transform.position + new Vector3(0.5f, 0, 0));
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
             {
-                cell = groundTilemap.WorldToCell(Player.transform.position + new Vector3(-0.75f, 0, 0));
+                cell = groundTilemap.WorldToCell(Player.transform.position + new Vector3(-0.5f, 0, 0));
             }
             if (groundTilemap.GetTile(cell) != null)
             {
@@ -128,9 +130,11 @@ public class PlayerController : MonoBehaviour
         else
         {
             float healthPercentage = tileHealthMap[position] / tileType.maxHealth;
+            // 计算破坏阶段
             int stageIndex = Mathf.FloorToInt((1 - healthPercentage) * tileType.damageStages.Length);
             stageIndex = Mathf.Clamp(stageIndex, 0, tileType.damageStages.Length - 1);
 
+            // 更新tile
             groundTilemap.SetTile(position, tileType.damageStages[stageIndex]);
         }
     }

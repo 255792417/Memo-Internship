@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Mine : MonoBehaviour
 {
+    [Header("Inventory")]
     public Item thisItem;
     public Inventory playerInventory;
 
@@ -11,6 +12,7 @@ public class Mine : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        // 如果碰到玩家，加分，销毁，加入背包
         if (other.CompareTag("Player"))
         {
             other.GetComponent<StatusController>().AddScore(score);

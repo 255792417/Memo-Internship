@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class StatusController : MonoBehaviour, IDamagable
 {
+    [Header("Audio")]
     public AudioManager audioManager;
 
+    [Header("UI")]
     public ScoreDisplay scoreDisplay;
     public Health health;
     public Oxygen oxygen;
@@ -67,6 +69,8 @@ public class StatusController : MonoBehaviour, IDamagable
             return;
 
         UpdateOxygen();
+
+        // 获得下落速度，用来判断摔落伤害
         fallVelocity = rb.velocity.y;
     }
 
@@ -85,6 +89,7 @@ public class StatusController : MonoBehaviour, IDamagable
         }
     }
 
+    // 增加氧气
     public void  AddOxygen(float value)
     {
         currentOxygen += value;
@@ -92,6 +97,7 @@ public class StatusController : MonoBehaviour, IDamagable
         oxygen.SetOxygen(currentOxygen);
     }
 
+    // 减少氧气
     public void ReduceOxygen(float value)
     {
         currentOxygen -= value;
@@ -103,8 +109,10 @@ public class StatusController : MonoBehaviour, IDamagable
         oxygen.SetOxygen(currentOxygen);
     }
 
+    // 落地
     void OnCollisionEnter2D(Collision2D collision)
     {
+        // 如果落地速度超过最小摔伤速度，就会受伤
         if (fallVelocity < minFallVelocity)
         {
             ApplyFallDamage(fallVelocity);
@@ -120,6 +128,7 @@ public class StatusController : MonoBehaviour, IDamagable
         float damagePercent = Mathf.InverseLerp(minFallVelocity, maxFallVelocity, velocity);
         int damage = Mathf.RoundToInt(Mathf.Lerp(minDamage, maxDamage, damagePercent) * fallDamageMultiplier);
 
+        // 伤害超过最大摔落伤害 统一按最大摔落伤害算
         if (damage > maxDamage)
         {
             damage = maxDamage;
@@ -130,6 +139,7 @@ public class StatusController : MonoBehaviour, IDamagable
 
     public void TakeDamage(float damage)
     {
+        // 受击间隔过短
         if (Time.time < lastDamageTime + damageInterval) return;
         lastDamageTime = Time.time;
 
@@ -138,11 +148,13 @@ public class StatusController : MonoBehaviour, IDamagable
        
         currentHealth -= damage;
 
+        // 受击闪烁
         if (!isFlashing)
         {
             StartCoroutine(FlashEffect());
         }
 
+        // 生命值 < 0 , 死亡
         if (currentHealth <= 0)
         {
             // 死亡音效
@@ -163,6 +175,7 @@ public class StatusController : MonoBehaviour, IDamagable
         TakeDamage(damage);
     }
 
+    // 回血
     public void Heal(float amount)
     {
         currentHealth += amount;
@@ -174,6 +187,7 @@ public class StatusController : MonoBehaviour, IDamagable
         Heal(amount);
     }
 
+    // 受击闪烁
     IEnumerator FlashEffect()
     {
         isFlashing = true;

@@ -55,7 +55,11 @@ public class AudioPanel : BasePanel
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            UIManager.Instance.ClosePanel(UIConst.AudioPanel);
+            UIManager.Instance.OpenPanel(UIConst.SettingsPanel);
+        }
     }
 
     private void BackButtonEvent()

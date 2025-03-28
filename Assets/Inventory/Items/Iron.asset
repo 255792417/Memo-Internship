@@ -16,3 +16,4 @@ MonoBehaviour:
   itemImage: {fileID: 21300000, guid: 73b4536b481f2604d90ef432269d9ce9, type: 3}
   itemHeld: 1
   canEquip: 0
+  defaultItemHeld: 1

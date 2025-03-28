@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Bag
   m_EditorClassIdentifier: 
   itemList: []
+  defaultItemNames:
+  - Coal

@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class UIManager
 {
+    // 单例模式
     private static UIManager instance;
+    // 根节点
     private Transform _uiRoot;
     private Dictionary<string, string> pathDict;
     // 预制件缓存字典
@@ -41,6 +43,7 @@ public class UIManager
         InitDicts();
     }
 
+    // 初始化各个字典
     private void InitDicts()
     {
         prefabDict = new Dictionary<string, GameObject>();
@@ -49,8 +52,7 @@ public class UIManager
         {
             {UIConst.SettingsPanel, "Menu/SettingsMenu" },
             {UIConst.InfoPanel, "Menu/InfoMenu" },
-            {UIConst.AudioPanel, "Menu/AudioMenu" },
-            {UIConst.BagPanel, "Menu/Bag" }
+            {UIConst.AudioPanel, "Menu/AudioMenu" }
         };
     }
 
@@ -58,6 +60,7 @@ public class UIManager
     public BasePanel OpenPanel(string name)
     {
         BasePanel panel = null;
+        // 如果已经打开，返回
         if (panelDict.TryGetValue(name, out panel))
         {
             Debug.LogError("界面已打开: " +  name);
@@ -65,6 +68,7 @@ public class UIManager
         }
 
         string path = "";
+        // 如果找不到页面，返回
         if(! pathDict.TryGetValue(name, out path))
         {
             Debug.LogError("界面不存在: " + name);
@@ -72,6 +76,7 @@ public class UIManager
         }
 
         GameObject panelPrefab = null;
+        // 如果找不到prefab， 从Resources中获取
         if(! prefabDict.TryGetValue(name, out panelPrefab))
         {
             string realPath = "Prefabs/Panel/" + path;
@@ -81,6 +86,7 @@ public class UIManager
 
         GameObject panelObject = GameObject.Instantiate(panelPrefab, UIRoot, false);
         panel = panelObject.GetComponent<BasePanel>();
+        // 标记为已创建
         panelDict.Add(name, panel);
 
         panel.OpenPanel(name);
@@ -105,5 +111,4 @@ public class UIConst
     public const string SettingsPanel = "SettingsPanel";
     public const string InfoPanel = "InfoPanel";
     public const string AudioPanel = "AudioPanel";
-    public const string BagPanel = "BagPanel";
 }
